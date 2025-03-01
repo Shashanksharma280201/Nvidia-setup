@@ -38,9 +38,56 @@
 ### 2.3 Ubuntu Upgrade
 - Upgrade from Ubuntu 18.04 to 20.04 by following this [Ubuntu Upgrade Guide](https://ubuntu.com/tutorials/upgrading-ubuntu-desktop#1-overview).
 
+## 3. Edge Device Connection Setup
 
-Development Team
+### 3.1 Overview
+- Before running any robot control programs, establish a secure SSH connection.
 
-### **License:**
-MIT License
+### 3.2 Connection Process
 
+#### 3.2.1 Network Configuration
+- Connect your development laptop to the same WiFi network as the edge device.
+- Verify network connectivity.
+- Ensure the edge device is powered on and connected to the network.
+
+#### 3.2.2 Find Edge Device IP Address
+- **Method 1 - Using hostname:**
+  ```sh
+  hostname -I
+  ```
+- **Method 2 - Using ifconfig:**
+  ```sh
+  ifconfig
+  ```
+  Look for the `wlan0` interface for WiFi connection.
+  Example output:
+  ```sh
+  wlan0: flags=4163<UP,BROADCAST,RUNNING,MULTICAST> mtu 1500
+  inet 192.168.1.100 netmask 255.255.255.0 broadcast 192.168.1.255
+  ```
+
+#### 3.2.3 Establish SSH Connection
+- From your development laptop, execute:
+  ```sh
+  ssh -X GMR@192.168.1.100  # For Orin NX
+  ssh -X GMR@<device_ip_address>  # For Jetson Nano
+  ```
+- When prompted, enter the password:
+  ```
+  123456
+  ```
+
+#### 3.2.4 Verification
+- After successful connection, the terminal prompt should indicate connection to the edge device.
+- Test the connection by running:
+  ```sh
+  nvidia-smi
+  ```
+  This should display the GPU information.
+
+---
+
+### **Notes:**
+- Ensure that Jetpack and CUDA versions are compatible with your hardware.
+- Always verify device connections using `lsusb` and `ifconfig`.
+- If SSH connection fails, check firewall settings and network configurations.
