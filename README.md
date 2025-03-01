@@ -38,7 +38,7 @@
 ### 2.3 Ubuntu Upgrade
 - Upgrade from Ubuntu 18.04 to 20.04 by following this [Ubuntu Upgrade Guide](https://ubuntu.com/tutorials/upgrading-ubuntu-desktop#1-overview).
 
-## 3. Edge Device Connection Setup
+# 3. Edge Device Connection Setup
 
 ### 3.1 Overview
 - Before running any robot control programs, establish a secure SSH connection.
