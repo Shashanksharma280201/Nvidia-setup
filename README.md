@@ -1,10 +1,8 @@
 # Nvidia-setup
 
-# Development Kit Setup and Configuration Guide
-
 # 1. Jetson Orin NX 8GB Developer Kit Setup
 
-### 1.1 Flashing the Image
+## 1.1 Flashing the Image
 - **Backup important files** (flashing erases all data).
 - Power off the Jetson Orin NX.
 - Connect a jumper cable between **ground (GND)** and **Force Recovery (REC) pins**.
@@ -17,8 +15,42 @@
   ```sh
   sudo apt install qemu-user-static sshpass abootimg nfs-kernel-server libxml2-utils binutils -y
   ```
-- Follow the official [Nvidia Guide](https://developer.nvidia.com/embedded/jetpack)
+- Follow the official [Nvidia Guide](https://developer.nvidia.com/embedded/jetpack).
 - Download the required Jetpack version (ensure compatibility).
+
+## 1.2 Enabling All CPU Cores
+By default, some CPU cores may be disabled in lower power modes. Follow these steps to enable all cores:
+
+### **Check Active CPU Cores**
+Run the following command to check how many cores are active:
+```sh
+lscpu
+```
+Or:
+```sh
+cat /proc/cpuinfo | grep "processor"
+```
+
+### **Enable All CPU Cores**
+If only 4 cores are active, enable the remaining cores:
+```sh
+echo 1 | sudo tee /sys/devices/system/cpu/cpu4/online
+echo 1 | sudo tee /sys/devices/system/cpu/cpu5/online
+```
+
+### **Set Jetson to Maximum Performance Mode**
+If some cores are disabled due to power settings, switch to high-performance mode:
+```sh
+sudo nvpmodel -m 0
+```
+Then reboot the system:
+```sh
+sudo reboot
+```
+
+After rebooting, check again with `lscpu` to confirm all 6 cores are active.
+
+
 
 # 2. Jetson Nano Setup
 
